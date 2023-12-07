@@ -11,7 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 
 @Module({
-  imports: [MongooseModule.forRoot(environment.mongo, {dbName: 'Betterreads'}), BackendFeaturesUserModule, BackendFeaturesBookModule, BackendFeaturesWriterModule],
+  imports: [MongooseModule.forRoot(environment.mongo, {dbName: 'betterreads'}), BackendFeaturesUserModule, BackendFeaturesBookModule, BackendFeaturesWriterModule],
   controllers: [AppController],
   providers: [AppService],
 })

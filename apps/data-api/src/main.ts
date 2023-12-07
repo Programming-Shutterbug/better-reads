@@ -15,11 +15,7 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
-  const corsOptions: CorsOptions = {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  };
+  const corsOptions: CorsOptions = {};
   app.enableCors(corsOptions);
 
   app.useGlobalInterceptors(new ApiResponseInterceptor());
