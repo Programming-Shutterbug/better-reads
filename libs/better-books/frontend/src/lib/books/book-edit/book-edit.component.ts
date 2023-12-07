@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
-import { IBook, IWriter } from '@nx-emma-indiv/shared/api';
+import { IBook, IUser, IWriter } from '@nx-emma-indiv/shared/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WriterService } from '../../writer/writer.service';
+import { AuthService } from '../../auth/auth.service';
 
 
 @Component({
@@ -12,26 +13,18 @@ import { WriterService } from '../../writer/writer.service';
 })
 
 export class BookEditComponent implements OnInit {
-  book: IBook = {
-    _id: '',
-    cover: '',
-    titel: '',
-    beschrijving: '',
-    genre: '',
-    origineletaal: '',
-    publiceerdatum: new Date(),
-    schrijver: {} as IWriter,
-    paginas: 0,
-  }
+    book = {} as IBook; 
     books: IBook[] | null = null;
     bookId: string | null = null;
     writers: IWriter[] = [];
     selectedWriterId: string | null = null;
+    userId: string | null = null;
 
     constructor( 
       private route: ActivatedRoute, 
       private bookService: BookService,
       private writerService: WriterService,
+      private authService: AuthService,
       private router: Router,
     ) {}
 
@@ -50,11 +43,25 @@ export class BookEditComponent implements OnInit {
                 console.log('Writers:', this.writers);
             });
         });
+
+        // Retrieve user ID from AuthService
+        this.authService.currentUser$.subscribe({
+          next: (user: IUser | null) => {
+            if (user) {
+              this.userId = user._id;
+            }
+          },
+          error: (error) => {
+            console.error('Error getting user information:', error);
+          },
+        });
     }
 
-
     updateBook() {
-      console.log('Updating book:', this.book);
+      if (this.userId !== this.book?.creatorID) {
+        console.error('Current user is not the creator of the book. Updating is not allowed.');
+        return;
+      }
       
       this.bookService.update(this.book).subscribe({
         next: (updatedBook) => {

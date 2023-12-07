@@ -14,13 +14,14 @@
         </div>
   
 
-      <div class="button-container text-center mt-3">
+      <div class="button-container text-center mt-3" *ngIf="showButton">
       <button type="button" class="btn text-center">
         <a routerLink="editbook" class="text-dark text-decoration-none">Wijzig Boek</a>
       </button>
       </div>
+     
 
-      <div class="button-container text-center mt-3">
+      <div class="button-container text-center mt-3" *ngIf="showButton">
         <!-- Show the "Verwijder Boek" button if the confirmation dialog is not shown -->
         <ng-container *ngIf="!showDeleteConfirmation; else confirmationDialog">
           <button type="button" class="btn text-center" (click)="showDeleteConfirmation = true">
@@ -28,7 +29,7 @@
           </button>
         </ng-container>
       </div>
-      
+
       <!-- To display the confirmation dialog when needed -->
       <ng-template #confirmationDialog>
         <div class="confirmation-dialog text-center mt-3">
@@ -37,7 +38,6 @@
           <button type="button" (click)="showDeleteConfirmation = false" class="btn text-center">Nee, annuleer</button>
         </div>
       </ng-template>
-
     </div>
 
     <!-- Right Column -->

@@ -8,10 +8,11 @@ export interface IWriter {
     bio: string;
     geboorteplaats: string;
     moedertaal: string;
+    creatorID: string;
 }
 
 export type ICreateWriter = Pick<IWriter,
-    'schrijvernaam' | 'geboortedatum' | 'bio' | 'geboorteplaats' | 'moedertaal'
+    'schrijvernaam' | 'geboortedatum' | 'bio' | 'geboorteplaats' | 'moedertaal' | 'creatorID'
 >;
 
 export type IUpdateWriter = Partial<Omit<IWriter, '_id'>>;

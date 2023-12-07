@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { AboutComponent, BookStatusComponent} from '@nx-emma-indiv/better-books/frontend';
 
+import { AboutComponent, BookStatusComponent, DashboardComponent} from '@nx-emma-indiv/better-books/frontend';
 import { UserListComponent, UserDetailComponent, UserEditComponent, UserNewComponent} from '@nx-emma-indiv/better-books/frontend';
 import { BookListComponent, BookDetailComponent, BookEditComponent, BookNewComponent} from '@nx-emma-indiv/better-books/frontend';
 import { WriterListComponent, WriterDetailComponent, WriterEditComponent, WriterNewComponent} from '@nx-emma-indiv/better-books/frontend';
 import { RegisterComponent, LoginComponent, HomepageComponent } from '@nx-emma-indiv/better-books/frontend';
-import { DashboardComponent } from 'libs/better-books/frontend/src/lib/dashboard/dashboard.component';
 
 
 export const appRoutes: Route[] = [

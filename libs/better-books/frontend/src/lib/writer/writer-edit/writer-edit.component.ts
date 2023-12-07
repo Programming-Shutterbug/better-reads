@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WriterService } from '../writer.service';
-import { IWriter } from '@nx-emma-indiv/shared/api';
+import { IUser, IWriter } from '@nx-emma-indiv/shared/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'nx-emma-indiv-writer-edit',
@@ -10,21 +11,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class WriterEditComponent implements OnInit {
-    writer: IWriter = {
-      _id: '',
-      profielFoto: '',
-      schrijvernaam: '',
-      geboortedatum: new Date(),
-      bio: '',
-      geboorteplaats: '',
-      moedertaal: '',
-    }
-    writers: IWriter[] | null = null;
-    writerId: string | null = null;
+  writer = {} as IWriter;
+  writers: IWriter[] | null = null;
+  writerId: string | null = null;
+  userId: string | null = null;
 
     constructor( 
       private route: ActivatedRoute, 
       private writerService: WriterService,
+      private authService: AuthService,
       private router: Router,
       ) {}
 
@@ -37,9 +32,26 @@ export class WriterEditComponent implements OnInit {
           this.writerService.read(this.writerId).subscribe((observable) => 
           this.writer = observable);
       });
+
+        // Retrieve user ID from AuthService
+        this.authService.currentUser$.subscribe({
+          next: (user: IUser | null) => {
+            if (user) {
+              this.userId = user._id;
+            }
+          },
+          error: (error) => {
+            console.error('Error getting user information:', error);
+          },
+        });
     }
 
     updateWriter() {
+      if (this.userId !== this.writer?.creatorID) {
+        console.error('Current user is not the creator of the writer. Updating is not allowed.');
+        return;
+      }
+      
       console.log('Updating writer:', this.writer);
       
       this.writerService.update(this.writer).subscribe({

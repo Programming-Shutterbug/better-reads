@@ -50,6 +50,13 @@ export class Book implements IBook {
     })
     paginas!: number;
 
+    @Prop({
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Reference to the User model
+        required: true,
+      })
+    creatorID!: string;
+
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

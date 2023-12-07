@@ -1,7 +1,7 @@
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
-import { ApiResponse, IBook, IUser } from '@nx-emma-indiv/shared/api';
+import { ApiResponse, IUser } from '@nx-emma-indiv/shared/api';
 import { Injectable } from '@angular/core';
 import { environment } from '@nx-emma-indiv/shared/util-env';
 import { BookService } from '../books/book.service';

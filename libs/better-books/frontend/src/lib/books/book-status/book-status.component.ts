@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
-import { IBook, IWriter, IUser, Leesstatus } from '@nx-emma-indiv/shared/api';
+import { IBook, IUser, Leesstatus } from '@nx-emma-indiv/shared/api';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { AuthService } from '../../auth/auth.service';
 import { UserService } from '../../user/user.service';
 
@@ -25,7 +24,6 @@ export class BookStatusComponent implements OnInit {
       private userService: UserService,
       private bookService: BookService,
       private authService: AuthService,
-      private cdRef: ChangeDetectorRef
       ) {}
 
       ngOnInit(): void {
@@ -88,7 +86,7 @@ export class BookStatusComponent implements OnInit {
                 (error) => {
                   // Handle error
                   console.error('Error updating book status', error);
-                }
+                },
               );
             }
           },
@@ -98,24 +96,18 @@ export class BookStatusComponent implements OnInit {
         });
       }
 
-        removeBookFromList(): void {
-          this.bookService.removeBookFromBoekenlijst(this.userId!, this.bookId!).subscribe(
-              (result) => {
-                  // Handle success
-                  console.log('Book removed from the list');
-                  this.router.navigate([`${this.userId}/dashboard`]);
-              },
-              (error) => {
-                  // Handle error
-                  console.error('Error removing book from the list', error);
-              }
-          );
+      removeBookFromList(): void {
+        this.bookService.removeBookFromBoekenlijst(this.userId!, this.bookId!).subscribe({
+          next: (result) => {
+            // Handle success
+            console.log('Book removed from the list');
+            this.router.navigate([`${this.userId}/dashboard`]);
+          },
+          error: (error) => {
+            // Handle error
+            console.error('Error removing book from the list', error);
+          },
+        });
       }
-      
-
-
-     
-      
-      
-      
+    
 }

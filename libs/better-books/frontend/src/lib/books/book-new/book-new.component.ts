@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../book.service';
-import { IBook, IWriter } from '@nx-emma-indiv/shared/api';
+import { IBook, IUser, IWriter } from '@nx-emma-indiv/shared/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WriterService } from '../../writer/writer.service';
-import { FormControl } from '@angular/forms';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'nx-emma-indiv-book-edit',
@@ -12,26 +12,17 @@ import { FormControl } from '@angular/forms';
 })
 
 export class BookNewComponent implements OnInit {
-  book: IBook = {
-    _id: '',
-    titel: '',
-    cover: '',
-    beschrijving: '',
-    genre: '',
-    origineletaal: '',
-    publiceerdatum: new Date(),
-    schrijver: {} as IWriter,
-    paginas: 1,
-  };
-  
+  book = {} as IBook; 
   bookId: string | null = null;
   selectedWriterId: string | null = null;
   writers: IWriter[] = [];
+  userId: string | null = null;
 
     constructor( 
       private route: ActivatedRoute, 
       private bookService: BookService,
       private writerService : WriterService,
+      private authService: AuthService,
       private router: Router,
       ) {}
 
@@ -40,31 +31,60 @@ export class BookNewComponent implements OnInit {
           this.writers = writers?.sort((a, b) => a.schrijvernaam.localeCompare(b.schrijvernaam)) ?? [];
           console.log('Writers:', this.writers);
         });
+
+        // Retrieve user ID from AuthService
+        this.authService.currentUser$.subscribe({
+          next: (user: IUser | null) => {
+            if (user) {
+              this.userId = user._id;
+            }
+          },
+          error: (error) => {
+            console.error('Error getting user information:', error);
+          },
+        });
       }
   
       createBook(): void {
-        const selectedWriter = this.writers.find(writer => writer._id === this.selectedWriterId);
+        this.authService.currentUser$.subscribe({
+            next: (user: IUser | null) => {
+                if (user) {
+                    // Set the userID based on the current user
+                    this.userId = user._id;
     
-        if (!selectedWriter) {
-            console.error('Selected writer not found.');
-            return;
-        }
+                    const selectedWriter = this.writers.find(writer => writer._id === this.selectedWriterId);
     
-        const newBook: IBook = { ...this.book, schrijver: selectedWriter };
+                    if (!selectedWriter) {
+                        console.error('Selected writer not found.');
+                        return;
+                    }
     
-        console.log('Book before creation:', newBook);
+                    // Create the new book with the updated userID
+                    const newBook: IBook = {
+                        ...this.book,
+                        schrijver: selectedWriter,
+                        creatorID: this.userId, // Set userID here
+                    };
     
-        this.bookService.create(newBook).subscribe(
-            (createdBook) => {
-                console.log('Book created successfully:', createdBook);
-                this.router.navigate(['../../books'], { relativeTo: this.route });
+                    console.log('Book before creation:', newBook);
+    
+                    this.bookService.create(newBook).subscribe(
+                        (createdBook) => {
+                            console.log('Book created successfully:', createdBook);
+                            this.router.navigate(['../../books'], { relativeTo: this.route });
+                        },
+                        (error) => {
+                            console.error('Error creating book:', error);
+                        }
+                    );
+                }
             },
-            (error) => {
-                console.error('Error creating book:', error);
-            }
-        );
+            error: (error) => {
+                console.error('Error getting user information:', error);
+            },
+        });
       }
-      
+  
       customSearch(term: string, item: any) {
         term = term.toLowerCase();
         return item.schrijvernaam.toLowerCase().includes(term);

@@ -43,6 +43,10 @@ export class CreateWriterDto implements ICreateWriter {
     @IsString()
     @IsNotEmpty()
     moedertaal!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    creatorID!: string;
 }
 
 export class UpsertWriterDto implements IUpsertWriter {
@@ -72,6 +76,10 @@ export class UpsertWriterDto implements IUpsertWriter {
     @IsString()
     @IsNotEmpty()
     moedertaal!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    creatorID!: string;
 }
 
 export class UpdateWriterDto implements IUpdateWriter {

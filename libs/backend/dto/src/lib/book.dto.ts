@@ -52,6 +52,10 @@ export class CreateBookDto implements ICreateBook {
     @IsString()
     @IsNotEmpty()
     origineletaal!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    creatorID!: string;
 }
 
 export class UpsertBookDto implements IUpsertBook {
@@ -88,6 +92,10 @@ export class UpsertBookDto implements IUpsertBook {
     @IsString()
     @IsNotEmpty()
     origineletaal!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    creatorID!: string;
 }
 
 export class UpdateBookDto implements IUpdateBook {

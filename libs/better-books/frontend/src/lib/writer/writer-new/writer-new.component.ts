@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WriterService } from '../writer.service';
-import { IWriter } from '@nx-emma-indiv/shared/api';
+import { IUser, IWriter } from '@nx-emma-indiv/shared/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'nx-emma-indiv-writer-edit',
@@ -9,25 +10,40 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./writer-new.component.css'],
 })
 
-export class WriterNewComponent {
-  writer: IWriter = {
-    _id: '',
-    profielFoto: '',
-    schrijvernaam: '',
-    geboortedatum: new Date(),
-    bio: '',
-    geboorteplaats: '',
-    moedertaal: '',
-  }
+export class WriterNewComponent implements OnInit {
+  writer = {} as IWriter;
+  userId: string | null = null;
 
-    constructor( 
-      private route: ActivatedRoute, 
+    constructor(
       private writerService: WriterService,
+      private authService: AuthService,
       private router: Router, 
       ) {}
 
+    ngOnInit(): void {
+        // Retrieve user ID from AuthService
+        this.authService.currentUser$.subscribe({
+          next: (user: IUser | null) => {
+            if (user) {
+              this.userId = user._id;
+            }
+          },
+          error: (error) => {
+            console.error('Error getting user information:', error);
+          },
+        });
+    }
 
     createWriter(): void {
+      // Assuming this.userId contains the current user's ID
+      if (!this.userId) {
+        console.error('User ID is missing. Cannot create writer without a user.');
+        return;
+      }
+    
+      // Set the creatorID (userID) in the writer object
+      this.writer.creatorID = this.userId;
+    
       this.writerService.create(this.writer).subscribe({
         next: (createdWriter) => {
           console.log('Writer created successfully:', createdWriter);
@@ -39,7 +55,6 @@ export class WriterNewComponent {
       });      
     }
     
-  
     goBack(): void {
       this.router.navigate(['../../writers']);
     }

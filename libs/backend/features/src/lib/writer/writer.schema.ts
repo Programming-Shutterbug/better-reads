@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { IWriter } from '@nx-emma-indiv/shared/api';
 
 export type WriterDocument = Writer & Document;
@@ -37,6 +37,13 @@ export class Writer implements IWriter {
         required: true,
     })
     moedertaal!: string;
+
+    @Prop({
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Reference to the User model
+        required: true,
+      })
+    creatorID!: string;
 
 }
 

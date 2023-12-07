@@ -44,12 +44,12 @@
         <span class="text-dark text-decoration-none">Terug</span>
       </button>
 
-        <button type="button" class="btn text-center">
+        <button type="button" class="btn text-center" *ngIf="showButton">
           <a routerLink="editwriter" class="text-dark text-decoration-none">Wijzig Schrijver</a>
         </button>
     </div>
 
-      <div class="button-container text-center">
+      <div class="button-container text-center" *ngIf="showButton">
         <!-- Show the "Verwijder Schrijver" button if the confirmation dialog is not shown -->
         <ng-container *ngIf="!showDeleteConfirmation; else confirmationDialog">
           <button type="button" class="btn text-center" (click)="showDeleteConfirmation = true">

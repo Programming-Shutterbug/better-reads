@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { IUser } from '@nx-emma-indiv/shared/api';
-import { AuthService } from '../auth/auth.service';
-import { BookService } from '../books/book.service';
 
 @Component({
     selector: 'nx-emma-indiv-dashboard',
@@ -16,9 +14,7 @@ export class DashboardComponent implements OnInit {
 
     constructor(
         private userService: UserService, 
-        private bookService: BookService, 
         private route: ActivatedRoute,
-        private authService: AuthService
         ) {}
 
         ngOnInit(): void {
@@ -37,7 +33,6 @@ export class DashboardComponent implements OnInit {
                 );
             }
         }
-
 
         getFormattedLeesstatus(leesstatus: string): string {
             switch (leesstatus) {

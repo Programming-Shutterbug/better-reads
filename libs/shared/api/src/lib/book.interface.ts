@@ -11,8 +11,9 @@ export interface IBook {
     publiceerdatum: Date;
     schrijver: IWriter;
     paginas: number;
+    creatorID: string;
 }
 
-export type ICreateBook = Pick<IBook,'cover' | 'titel' | 'beschrijving' | 'genre' | 'origineletaal' | 'publiceerdatum' | 'schrijver' | 'paginas'>;
+export type ICreateBook = Pick<IBook,'cover' | 'titel' | 'beschrijving' | 'genre' | 'origineletaal' | 'publiceerdatum' | 'schrijver' | 'paginas' | 'creatorID'>;
 export type IUpdateBook = Partial<Omit<IBook, '_id'>>;
 export type IUpsertBook = IBook;

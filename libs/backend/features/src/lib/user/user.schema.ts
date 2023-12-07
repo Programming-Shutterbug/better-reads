@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { IUser } from '@nx-emma-indiv/shared/api';
-import { IBookList, Leesstatus } from 'libs/shared/api/src/lib/booklist.interface';
+import { IBookList, Leesstatus } from '@nx-emma-indiv/shared/api';
 
 export type UserDocument = User & Document;
 

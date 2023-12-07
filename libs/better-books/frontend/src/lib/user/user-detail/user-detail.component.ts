@@ -12,20 +12,10 @@ import { AuthService } from '../../auth/auth.service';
 
 export class UserDetailComponent implements OnInit {
   showDeleteConfirmation = false;
-
-    user: IUser = {
-      _id: '',
-      naam: '',
-      email: '',
-      geboortedatum: new Date(),
-      straatnaam: '',
-      huisnummer: 0,
-      stad: '',
-      password: '',
-      boekenlijst: []
-    }
+    user = {} as IUser;
     users: IUser[] | null = null;
     userId: string | null = null;
+    showButton: boolean | undefined;
 
     constructor( 
       private route: ActivatedRoute, 
@@ -39,12 +29,41 @@ export class UserDetailComponent implements OnInit {
       this.route.paramMap.subscribe((params) => {
         this.userId = params.get('_id');
 
-        this.userService.read(this.userId).subscribe((observable) => 
-          this.user = observable);
-      });
+          // Retrieve user ID from AuthService
+          this.authService.currentUser$.subscribe({
+              next: (user: IUser | null) => {
+                 if (user) {
+                  this.userId = user._id;      
+
+                
+                    // Fetch book details using this.bookId
+                    this.userService.read(this.userId).subscribe((observable) => {
+                    this.user = observable;
+          
+                    // Set a flag to determine whether the button should be visible
+                    this.showButton = this.isCurrentUserCreator();
+                  });
+                }
+              },
+                error: (error) => {
+                console.error('Error getting user information:', error);
+              },
+            });
+          });
+    }  
+
+    isCurrentUserCreator(): boolean {
+      // Check if userId is the same as the creatorID
+      return this.userId === this.user?._id;
     }
+  
 
     deleteUser(): void {
+      if (this.userId !== this.user?._id) {
+        console.error('Current user is not the creator of the user. Deletion is not allowed.');
+        return;
+      }
+
       if (this.userId) {
         this.userService.delete(this.user).subscribe({
           next: () => {

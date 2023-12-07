@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { IUser } from '@nx-emma-indiv/shared/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'nx-emma-indiv-user-edit',
@@ -10,24 +11,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class UserEditComponent implements OnInit {
-    user: IUser = {
-      _id: '',
-      naam: '',
-      email: '',
-      geboortedatum: new Date(),
-      straatnaam: '',
-      huisnummer: 0,
-      stad: '',
-      password: '',
-      boekenlijst: []
-    }
+    user = {} as IUser;
     users: IUser[] | null = null;
     userId: string | null = null;
 
     constructor( 
       private route: ActivatedRoute, 
       private userService: UserService,
-      private router: Router, 
+      private authService: AuthService,
       ) {}
 
     ngOnInit(): void {
@@ -39,9 +30,26 @@ export class UserEditComponent implements OnInit {
           this.userService.read(this.userId).subscribe((observable) => 
           this.user = observable);
       });
+
+        // Retrieve user ID from AuthService
+        this.authService.currentUser$.subscribe({
+          next: (user: IUser | null) => {
+            if (user) {
+              this.userId = user._id;
+            }
+          },
+          error: (error) => {
+            console.error('Error getting user information:', error);
+          },
+        });
     }
 
     updateUser() {
+      if (this.userId !== this.user?._id) {
+        console.error('Current user is not the creator of the user. Updating is not allowed.');
+        return;
+      }
+
       console.log('Updating user:', this.user);
       
       this.userService.update(this.user).subscribe({
