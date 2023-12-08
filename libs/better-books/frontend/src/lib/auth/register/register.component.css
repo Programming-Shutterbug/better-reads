@@ -17,3 +17,8 @@
 .register:hover {
   background-color: rgb(194, 190, 190);   
 }
+
+.form-group .rule {
+  font-size: 0.8em;
+  font-style: italic;
+}

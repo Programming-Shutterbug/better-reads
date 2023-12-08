@@ -60,7 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   validEmail(control: FormControl): { [key: string]: boolean } | null {
     const email = control.value;
-    const regexp = /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+$/;
+    const regexp = /^[a-zA-Z]+\d*@([a-zA-Z]+\.)+[a-zA-Z]+$/;
     return regexp.test(email) ? null : { invalidEmail: true };
   }
 
