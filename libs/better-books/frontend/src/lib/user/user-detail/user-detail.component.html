@@ -28,31 +28,29 @@
           <span class="text-dark text-decoration-none">Terug</span>
         </button>
 
-          <button type="button" class="btn text-center" *ngIf="showButton">
-            <a routerLink="edit" class="text-dark text-decoration-none">Wijzig Gegevens</a>
-          </button>
+        <button type="button" class="btn text-center" *ngIf="showButton" [routerLink]="['edit']">
+          Wijzig Gegevens
+        </button>
       </div>
 
       <!-- Verwijderen even niet nodig, anders verwijdert eigen gebruiker -->
-        <div class="button-container text-center" *ngIf="showButton">
+        <!-- <div class="button-container text-center" *ngIf="showButton"> -->
           <!-- Show the "Verwijder Schrijver" button if the confirmation dialog is not shown -->
-          <ng-container *ngIf="!showDeleteConfirmation; else confirmationDialog">
+          <!-- <ng-container *ngIf="!showDeleteConfirmation; else confirmationDialog">
             <button type="button" class="btn text-center" (click)="showDeleteConfirmation = true">
               <a class="text-dark text-decoration-none">Verwijder uw account</a>
             </button>
           </ng-container>
-        </div>
+        </div> -->
         
         <!-- Use ngTemplateOutlet to display the confirmation dialog when needed -->
-        <ng-template #confirmationDialog>
+        <!-- <ng-template #confirmationDialog>
           <div class="confirmation-dialog mt-1">
             <p>Weet u zeker dat u uw account wilt verwijderen?</p>
             <button type="button" (click)="deleteUser()" class="btn text-center me-3">Ja, verwijder</button>
             <button type="button" (click)="showDeleteConfirmation = false" class="btn text-center">Nee, annuleer</button>
           </div>
-        </ng-template>
-
-
+        </ng-template> -->
 
       </div>
     </div>

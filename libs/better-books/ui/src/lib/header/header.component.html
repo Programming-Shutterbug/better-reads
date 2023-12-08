@@ -1,18 +1,22 @@
 <nav class="navbar navbar-light bg-dark">
 
   <a routerLink="/" *ngIf="!isLoggedIn" class="navbar-brand text-decoration-none text-light ms-5">Betterreads</a>
-  <a routerLink="/dashboard" *ngIf="isLoggedIn" class="navbar-brand text-decoration-none text-light ms-5">Betterreads</a>
+  <a [routerLink]="['/', userId, 'dashboard']" *ngIf="isLoggedIn" class="navbar-brand text-decoration-none text-light ms-5">Betterreads</a>
 
   <div class="items d-flex flex-column flex-sm-row me-5">
-    <a [routerLink]="['/', userId, 'dashboard']" *ngIf="isLoggedIn" class="nav-link text-decoration-none text-light me-1 mt-2">Boekenlijst</a>
+    <button *ngIf="isLoggedIn" class="btn text-decoration-none text-light me-1" [routerLink]="['/', userId, 'dashboard']"> Boekenlijst </button>   
+
     <!-- <a routerLink="/users" *ngIf="isLoggedIn" class="nav-link text-decoration-none text-light me-3 mt-2 ms-3">Gebruikers</a> -->
-    <a routerLink="/writers" *ngIf="isLoggedIn" class="nav-link text-decoration-none text-light me-3 mt-2 ms-3">Schrijvers</a>
-    <a routerLink="/books" *ngIf="isLoggedIn" class="nav-link text-decoration-none text-light me-3 mt-2">Boeken</a>
+
+    <button *ngIf="isLoggedIn" class="btn text-decoration-none text-light me-3 ms-3" [routerLink]="['/writers']"> Schrijvers </button>   
+    <button *ngIf="isLoggedIn" class="btn text-decoration-none text-light me-3" [routerLink]="['/books']"> Boeken </button>   
+
     <!-- <a routerLink="/register" *ngIf="!isLoggedIn" class="nav-link text-decoration-none text-light me-3 ms-3 mt-2">Registreren</a>
     <a routerLink="/user/login" *ngIf="!isLoggedIn" class="nav-link text-decoration-none text-light me-3 mt-2">Inloggen</a> -->
         
-    <a routerLink="/about" class="nav-link text-decoration-none text-light me-3 ms-5 mt-2">About</a>
-    <a [routerLink]="['users/', userId]" *ngIf="isLoggedIn" class="nav-link text-decoration-none text-light me-1 mt-2">Account</a>
+    <button class="btn text-decoration-none text-light me-3 ms-5" [routerLink]="['/about']"> About </button>   
+    <button *ngIf="isLoggedIn" class="btn text-decoration-none text-light me-1" [routerLink]="['users/', userId]"> Account </button>  
+
     <button *ngIf="isLoggedIn" (click)="logout()" class="btn text-decoration-none text-light me-5">Uitloggen</button>
 
   </div>

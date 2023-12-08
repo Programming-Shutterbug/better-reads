@@ -4,10 +4,10 @@
     <div class="input-group mb-3">
       <input [(ngModel)]="searchTerm" type="search" class="form-control me-5" placeholder="Zoeken op boek titel" aria-label="Search" aria-describedby="search-addon" />
 
-      <button type="button" class="btn btn-info">
-        <a routerLink="/books/newbook" class="text-dark text-decoration-none">Nieuw Boek</a>
+      <button type="button" class="btn btn-info" [routerLink]="['/books/newbook']">
+        Nieuw Boek
       </button>
-
+     
     </div>
   </div>
   

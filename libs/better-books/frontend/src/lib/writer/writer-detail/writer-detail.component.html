@@ -44,9 +44,9 @@
         <span class="text-dark text-decoration-none">Terug</span>
       </button>
 
-        <button type="button" class="btn text-center" *ngIf="showButton">
-          <a routerLink="editwriter" class="text-dark text-decoration-none">Wijzig Schrijver</a>
-        </button>
+      <button type="button" class="btn text-center" *ngIf="showButton" [routerLink]="['editwriter']">
+        Wijzig Schrijver
+      </button>
     </div>
 
       <div class="button-container text-center" *ngIf="showButton">

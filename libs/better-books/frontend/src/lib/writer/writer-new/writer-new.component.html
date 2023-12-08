@@ -3,15 +3,12 @@
 
     <div class="form-group mb-4">
       <label for="InputFoto" class="fw-bold">Profielfoto</label>
-      <input type="text" class="form-control" id="InputFoto" [(ngModel)]="writer.profielFoto"  name="profielFoto" placeholder="Profielfoto URL" required minlength="5" maxlength="255">
+      <input type="text" class="form-control" id="InputFoto" [(ngModel)]="writer.profielFoto"  name="profielFoto" placeholder="Profielfoto URL" required minlength="5">
       <div *ngIf="writerForm.controls['profielFoto'].touched && writerForm.controls['profielFoto'].hasError('required')" class="text-danger">
         Profielfoto is verplicht.
       </div>
       <div *ngIf="writerForm.controls['profielFoto'].touched && writerForm.controls['profielFoto'].hasError('minlength')" class="text-danger">
         Profielfoto moet minimaal 5 tekens lang zijn.
-      </div>
-      <div *ngIf="writerForm.controls['profielFoto'].touched && writerForm.controls['profielFoto'].hasError('maxlength')" class="text-danger">
-        Profielfoto kan niet langer zijn dan 255 tekens.
       </div>
     </div>
     

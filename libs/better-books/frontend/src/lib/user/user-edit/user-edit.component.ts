@@ -72,7 +72,7 @@ export class UserEditComponent implements OnInit {
     checkFutureUserDate(): boolean {
       const currentDate = new Date();
       const inputDate = new Date(this.user.geboortedatum);
-      return inputDate > currentDate;
+      return inputDate > currentDate && inputDate.getFullYear() > 1900;
     }
     
     checkValidHuisnummer(): boolean {
@@ -80,7 +80,7 @@ export class UserEditComponent implements OnInit {
     }
 
     isValidEmail(email: string): boolean {
-      const regexp = /^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+$/;
+      const regexp = /^[a-zA-Z]+\d*@([a-zA-Z]+\.)+[a-zA-Z]+$/;
       return regexp.test(email);
     }
 }

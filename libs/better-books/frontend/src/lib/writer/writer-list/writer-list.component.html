@@ -1,16 +1,16 @@
 <div class="container-fluid p-5">
 
   <div class="new writer d-flex justify-content-end mt-4 mb-5">
-    <button type="button" class="btn btn-info">
-      <a routerLink="/newwriter" class="text-dark text-decoration-none">Nieuwe Schrijver</a>
-    </button>
+    <button type="button" class="btn btn-info" [routerLink]="['/newwriter']">
+      Nieuwe Schrijver
+    </button>    
   </div>
   
   <div class="cards p-5">
     <ng-container *ngFor="let writer of writers">
       <div class="card">
         <div class="display">
-  
+        
         <img src="{{ writer.profielFoto }}" class="card-img-top me-5 ms-5 mt-3 mb-3" alt="Book Image" onerror="this.src='/assets/placeholder-person.png'">
   
         <div class="card-body me-5 ms-5 mt-5">

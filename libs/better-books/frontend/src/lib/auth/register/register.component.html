@@ -2,7 +2,7 @@
 
 <div class="container-fluid w-50">
   <div class="mt-5">
-    <h2 class="mb-5 text-center">Register</h2>
+    <h2 class="mb-5 text-center">Registeren</h2>
 
     <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
@@ -83,7 +83,7 @@
 
       <div class="form-group">
         <label for="inputPassword">Wachtwoord</label><br>
-        <label class="rule">Wachtwoord moet minimaal één hoofdletter, één kleine letter en één nummer bevatten.</label>
+        <label class="rule">Wachtwoord moet minimaal één hoofdletter, één kleine letter en één nummer bevatten en minimaal 8 tekens lang zijn.</label>
         <div class="input-group">
           <input type="{{ hidePassword ? 'password' : 'text' }}" class="form-control" formControlName="password" id="inputPassword" [ngClass]="{
               'is-invalid':

@@ -25,10 +25,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
+    
     this.registerForm = new FormGroup({
       naam:  new FormControl(null, [Validators.required]),
       geboortedatum:  new FormControl(null, [Validators.required]),

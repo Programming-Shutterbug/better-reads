@@ -2,6 +2,17 @@
   <form class="m-5" #WriterEditForm="ngForm" (ngSubmit)="updateWriter()">
 
     <div class="form-group mb-4">
+      <label for="InputFoto" class="fw-bold">Profielfoto</label>
+      <input type="text" class="form-control" id="InputFoto" [(ngModel)]="writer.profielFoto"  name="profielFoto" placeholder="Profielfoto URL" required minlength="5" maxlength="255">
+      <div *ngIf="WriterEditForm.controls['profielFoto'].touched && WriterEditForm.controls['profielFoto'].hasError('required')" class="text-danger">
+        Profielfoto is verplicht.
+      </div>
+      <div *ngIf="WriterEditForm.controls['profielFoto'].touched && WriterEditForm.controls['profielFoto'].hasError('minlength')" class="text-danger">
+        Profielfoto moet minimaal 5 tekens lang zijn.
+      </div>
+    </div>
+
+    <div class="form-group mb-4">
       <label for="InputName" class="fw-bold">Naam</label>
       <input type="text" class="form-control" id="InputName" [(ngModel)]="writer.schrijvernaam"  name="schrijvernaam" placeholder="Naam" required>
       <div *ngIf="WriterEditForm.controls['schrijvernaam'].touched && WriterEditForm.controls['schrijvernaam'].hasError('required')" class="text-danger">

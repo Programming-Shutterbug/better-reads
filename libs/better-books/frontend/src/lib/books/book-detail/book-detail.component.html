@@ -8,17 +8,19 @@
       </div>
 
         <div class="button-container text-center mt-3">
-          <button type="button" class="btn text-center">
-            <a [routerLink]="[userId, 'booklist']" class="text-dark text-decoration-none">Boekstatus</a>
+          <button type="button" class="btn text-center" [routerLink]="[userId, 'booklist']">
+            Boekstatus
           </button>
         </div>
+      
   
 
-      <div class="button-container text-center mt-3" *ngIf="showButton">
-      <button type="button" class="btn text-center">
-        <a routerLink="editbook" class="text-dark text-decoration-none">Wijzig Boek</a>
-      </button>
-      </div>
+        <div class="button-container text-center mt-3" *ngIf="showButton">
+          <button type="button" class="btn text-center" [routerLink]="['/editbook']">
+            Wijzig Boek
+          </button>
+        </div>
+        
      
 
       <div class="button-container text-center mt-3" *ngIf="showButton">

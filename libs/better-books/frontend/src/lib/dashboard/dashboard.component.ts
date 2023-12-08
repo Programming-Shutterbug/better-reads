@@ -34,6 +34,20 @@ export class DashboardComponent implements OnInit {
             }
         }
 
+        
+        getFormattedLeesstatus(leesstatus: string): string {
+            switch (leesstatus) {
+              case 'READ':
+                return 'gelezen';
+              case 'TO_READ':
+                return 'nog te lezen';
+              case 'DNF':
+                return 'DNF (Did Not Finish)';
+              default:
+                return leesstatus;
+            }
+        }
+
         getStatusBoxColor(leesstatus: string): string {
           switch (leesstatus) {
             case 'gelezen':
@@ -44,7 +58,7 @@ export class DashboardComponent implements OnInit {
             case 'TO_READ':
               return '#f2c394';
         
-            case 'DNF (Did not finish)':
+            case 'dnf':
             case 'DNF':
               return '#f59a9a';
         
@@ -59,7 +73,7 @@ export class DashboardComponent implements OnInit {
             } else {
               this.selectedLeesstatus = leesstatus;
             }
-        }
+          }
 
         getFilteredBooksCount(): number {
             if (!this.user || !this.user.boekenlijst) {
@@ -71,5 +85,5 @@ export class DashboardComponent implements OnInit {
             }
           
             return this.user.boekenlijst.filter(book => book.leesstatus === this.selectedLeesstatus).length;
-        }
+          }
 }

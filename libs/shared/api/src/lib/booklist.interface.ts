@@ -1,9 +1,9 @@
 import { IBook } from "./book.interface";
 
 export enum Leesstatus {
-    READ = 'gelezen',
-    TO_READ = 'nog te lezen',
-    DNF = 'DNF (Did not finish)',
+    READ = 'READ',
+    TO_READ = 'TO_READ',
+    DNF = 'DNF',
 }
   
 export interface IBookList {

@@ -1,15 +1,14 @@
-.navbar a, button {
+.navbar a {
    font-size: 2em;
 }
 
-
-.items a:hover, button:hover {
+button:hover {
    background-color: rgb(222, 217, 217);
    -webkit-text-fill-color: black;
    border-radius: 10px;
 }
 
-.items a, button {
+button {
    border-radius: 10px;
    font-size: 1.25em;
 }
