@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
             // Retrieve user ID from route parameter
             const userId = this.route.snapshot.paramMap.get('_id');
     
-            // Fetch the user with booklist
+            // Haal de user op met boekenlijst
             if (userId) {
                 this.userService.findOneWithBooklist(userId).subscribe(
                     (userWithBooklist: IUser) => {
@@ -31,19 +31,6 @@ export class DashboardComponent implements OnInit {
                         console.error('Error fetching user with booklist:', error);
                     }
                 );
-            }
-        }
-
-        getFormattedLeesstatus(leesstatus: string): string {
-            switch (leesstatus) {
-              case 'READ':
-                return 'gelezen';
-              case 'TO_READ':
-                return 'nog te lezen';
-              case 'DNF':
-                return 'DNF (Did Not Finish)';
-              default:
-                return leesstatus;
             }
         }
 
@@ -57,7 +44,7 @@ export class DashboardComponent implements OnInit {
             case 'TO_READ':
               return '#f2c394';
         
-            case 'dnf':
+            case 'DNF (Did not finish)':
             case 'DNF':
               return '#f59a9a';
         
@@ -72,7 +59,7 @@ export class DashboardComponent implements OnInit {
             } else {
               this.selectedLeesstatus = leesstatus;
             }
-          }
+        }
 
         getFilteredBooksCount(): number {
             if (!this.user || !this.user.boekenlijst) {
@@ -84,5 +71,5 @@ export class DashboardComponent implements OnInit {
             }
           
             return this.user.boekenlijst.filter(book => book.leesstatus === this.selectedLeesstatus).length;
-          }
+        }
 }

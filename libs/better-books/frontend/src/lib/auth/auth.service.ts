@@ -50,11 +50,7 @@ export class AuthService {
     console.log(`login at ${environment.dataApiUrl}/api/user/login`);
   
     return this.http
-      .post<{ results: IUser }>(
-        `${environment.dataApiUrl}/api/user/login`,
-        { email: email, password: password },
-        { headers: this.headers }
-      )
+      .post<{ results: IUser }>(`${environment.dataApiUrl}/api/user/login`, { email: email, password: password }, { headers: this.headers })
       .pipe(
         map((response) => {
           // Extract the user information from the API response

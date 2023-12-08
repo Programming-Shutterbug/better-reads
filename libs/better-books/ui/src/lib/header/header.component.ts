@@ -20,12 +20,6 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
       this.authService.currentUser$.subscribe({
-          next: (user: IUser | null) => {
-              this.isLoggedIn = !!user;
-          },
-      });
-
-      this.authService.currentUser$.subscribe({
         next: (user: IUser | null) => {
           if (user) {
             this.isLoggedIn = !!user;
@@ -40,6 +34,7 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+    this.isLoggedIn = false;
   }
 
   navigateToEditPage(): void {

@@ -28,7 +28,9 @@ export class UserService {
             this.logger.debug('ID is null or "null"');
             return null;
         }   
+
         const item = await this.userModel.findOne({ _id: _id }).exec(); 
+
         if (!item) {
             this.logger.debug('Item not found');
         }
@@ -37,6 +39,7 @@ export class UserService {
 
     async findOneByEmail(email: string): Promise<IUser | null> {
         this.logger.log(`Finding user by email ${email}`);
+
         const item = this.userModel
             .findOne({ emailAddress: email })
             .select('-password')
@@ -45,7 +48,7 @@ export class UserService {
     }
 
     async create(userDto: CreateUserDto): Promise<IUser> {
-        this.logger.log(`Create user ${userDto.naam}`);
+        this.logger.log(`Create user ${userDto}`);
         
         // Sluit _id expliciet uit
         const { _id, ...userWithoutId } = userDto;
@@ -63,16 +66,18 @@ export class UserService {
       
         
     async update(userId: string, updateUserDto: UpdateUserDto): Promise<IUser> {
+        this.logger.log(`Update user ${userId}`);
+
         const existingUser = await this.userModel.findById(userId).exec();
       
         if (!existingUser) {
           throw new NotFoundException(`User with id ${userId} not found`);
         }
       
-        // Update user properties
+        // Update user gegevens
         Object.assign(existingUser, updateUserDto);
       
-        // Save the updated user
+        // Sla geupdate user op
         const updatedUser = await existingUser.save();
       
         return updatedUser;
@@ -80,6 +85,7 @@ export class UserService {
     
     async deleteUser(_id: string): Promise<void> {
       this.logger.log(`Deleting user with id ${_id}`);
+
       const deletedItem = await this.userModel.findByIdAndDelete(_id).exec();
 
       if (!deletedItem) {
@@ -91,6 +97,8 @@ export class UserService {
     } 
 
     async login(email: string, password: string): Promise<IUser> {
+        this.logger.log(`User loggin in`);
+
         try {
             const user = await this.userModel.findOne({ email });
     
@@ -98,11 +106,11 @@ export class UserService {
                 throw new Error(`User with email ${email} not found`);
             }
         
-            // Check if the user object has the wachtwoord property set
             if (!user.password) {
                 throw new Error('User object does not have the wachtwoord property set');
             }
     
+            // Vergelijk het opgegeven wachtwoord met het opgeslagen wachtwoord van de gebruiker.
             const passwordMatch = await bcrypt.compare(password, user.password);
     
             if (!passwordMatch) {
@@ -125,6 +133,7 @@ export class UserService {
         }   
     
         try {
+            // Zoek een gebruiker in de database op basis van het _id en populeer de boekenlijst met boekeninformatie.
             const userWithBooklist = await this.userModel
                 .findOne({ _id: _id })
                 .populate({

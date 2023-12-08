@@ -21,6 +21,7 @@ export class BookService {
         async findAll(): Promise<IBook[]> {
             this.logger.log(`Finding all books`);
             
+            // Gebruikt populate om de schrijver samen met boek op te halen 
             const items = await this.bookModel.find().populate('schrijver');
             
             return items;
@@ -30,12 +31,13 @@ export class BookService {
         async findOne(_id: string): Promise<IBook | null> {
             this.logger.log(`finding book with id ${_id}`);
         
-            // Check if id is null
+            // Kijk of id null is
             if (_id === null || _id === "null") {
                 this.logger.debug('ID is null or "null"');
                 return null;
             }
-            // Use populate to fetch the writer details along with the book
+
+            // Gebruikt populate om de schrijver details samen met boek op te halen 
             const item = await this.bookModel.findOne({ _id: _id }).populate('schrijver').exec();
         
             if (!item) {
@@ -47,12 +49,15 @@ export class BookService {
         
 
         async createBook(bookDto: CreateBookDto): Promise<IBook> {
+            this.logger.log(`New book is created`);
+
+            // Haal het "_id" en "schrijver" veld uit het boekDto object.
             const { _id, schrijver, ...bookWithoutWriter } = bookDto;
         
             // Voeg de schrijver expliciet toe aan het boek
             const bookData = {
             ...bookWithoutWriter,
-            schrijver: schrijver, // Hier de schrijver direct toevoegen
+            schrijver: schrijver,
             };
         
             const createdBook = await this.bookModel.create(bookData);
@@ -61,16 +66,19 @@ export class BookService {
         
         
         async update(bookId: string, updateBookDto: UpdateBookDto): Promise<IBook> {
+            this.logger.log(`Update book ${bookId}`)
+
+            // Zoek het bestaande boek in de database op basis van het opgegeven boekId.
             const existingBook = await this.bookModel.findById(bookId).exec();
         
             if (!existingBook) {
             throw new NotFoundException(`Book with id ${bookId} not found`);
             }
         
-            // Update book properties
+            // Update book eigenschappen
             Object.assign(existingBook, updateBookDto);
         
-            // Save the updated book
+            // Sla geupdate boek op
             const updatedBook = await existingBook.save();
         
             return updatedBook;
@@ -79,6 +87,7 @@ export class BookService {
 
         async deleteBook(_id: string): Promise<void> {
         this.logger.log(`Deleting Book with id ${_id}`);
+
         const deletedItem = await this.bookModel.findByIdAndDelete(_id).exec();
 
         if (!deletedItem) {
@@ -90,14 +99,20 @@ export class BookService {
         }
 
         async addBookBooklist(userId: string, bookId: IBook, leesstatus: Leesstatus): Promise<IUser> {
+
             const user = await this.userModel.findById(userId).exec();
 
             if (!user) {
                 throw new NotFoundException(`User with id ${userId} not found`);
             }
 
+            // Creëer een nieuw boekobject met het opgegeven boekId en leesstatus.
             const newBook = { boekId: bookId, leesstatus: leesstatus };
+
+            // Voeg het nieuwe boek toe aan de boekenlijst van de gebruiker.
             user.boekenlijst.push(newBook);
+
+            // Sla de bijgewerkte gebruiker op in de database.
             const updatedUser = await user.save();
 
             return updatedUser;
@@ -117,7 +132,7 @@ export class BookService {
                 throw new NotFoundException(`Book with id ${bookId} not found in user's boekenlijst`);
             }
 
-            // Update the leesstatus of the book
+            // Update de leesstatus van het boek
             user.boekenlijst[bookIndex].leesstatus = leesstatus;
 
             const updatedUser = await user.save();
@@ -137,7 +152,7 @@ export class BookService {
                 throw new NotFoundException(`Book with id ${bookId} not found in user's boekenlijst`);
             }
     
-            // Remove the book from boekenlijst
+            // Verwijder het boek van de boekenlijst
             user.boekenlijst.splice(bookIndex, 1);
         
             const updatedUser = await user.save();

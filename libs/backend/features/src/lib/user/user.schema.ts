@@ -45,7 +45,7 @@ export class User implements IUser {
     })
     password!: string;
 
-    //toegevoegd
+    //Embedded Boekenlijst
     @Prop({
         type: [{
           boekId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },

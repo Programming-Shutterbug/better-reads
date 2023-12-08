@@ -29,22 +29,20 @@ export class BookDetailComponent implements OnInit {
       private router: Router) {}
 
       ngOnInit(): void {
-        // Retrieve bookId from route parameter
+        // Krijg bookId van route parameter
         this.route.paramMap.subscribe((params) => {
           this.bookId = params.get('_id');
       
-          // Retrieve user ID from AuthService
+          // Krijg userID van AuthService
           this.authService.currentUser$.subscribe({
             next: (user: IUser | null) => {
               if (user) {
-                this.userId = user._id;      
-                // Now you have both bookId and userId, you can use them as needed.
-      
-                // Fetch book details using this.bookId
+                this.userId = user._id;            
+                // Boek details ophalen gebaseerd op bookId
                 this.bookService.read(this.bookId).subscribe((observable) => {
                   this.book = observable;
 
-                    // Set a flag to determine whether the button should be visible
+                    // Check of de userId en creator hetzelfde zijn, als het niet zo is, is de knop niet zichtbaar
                     this.showButton = this.isCurrentUserCreator();
                 });
               }
@@ -57,7 +55,6 @@ export class BookDetailComponent implements OnInit {
       }
 
       isCurrentUserCreator(): boolean {
-        // Check if userId is the same as the creatorID
         return this.userId === this.book?.creatorID;
       }
 
@@ -72,9 +69,9 @@ export class BookDetailComponent implements OnInit {
             next: () => {
               console.log('Book deleted successfully');
       
-              // Close the confirmation dialog
+              // sluit de uitklap dialoog
               this.showDeleteConfirmation = false;
-              // Navigate back to the book list
+              // Ga terug naar boekenlijst
               this.router.navigate(['../../books'], { relativeTo: this.route });
             },
             error: (error) => {

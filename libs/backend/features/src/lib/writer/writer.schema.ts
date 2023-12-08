@@ -15,6 +15,7 @@ export class Writer implements IWriter {
 
     @Prop({
         required: true,
+        unique: true,
     })
     schrijvernaam!: string;
 

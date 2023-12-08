@@ -15,6 +15,7 @@ export class Book implements IBook {
 
     @Prop({
         required: true,
+        unique: true,
     })
     titel!: string;
 
@@ -38,6 +39,7 @@ export class Book implements IBook {
     })
     publiceerdatum!: Date;
 
+    // refernce naar schrijver
     @Prop({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Writer', // Reference to the Writer model
@@ -50,6 +52,7 @@ export class Book implements IBook {
     })
     paginas!: number;
 
+    // reference naar user
     @Prop({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // Reference to the User model

@@ -14,10 +14,6 @@ import {
     IBookList
 } from '@nx-emma-indiv/shared/api';
 
-/**
- * Use the `Pick` utility type to extract only the properties we want for
- * new to-do items
- */
 export class CreateUserDto implements ICreateUser {
 
     @IsOptional()
@@ -50,7 +46,6 @@ export class CreateUserDto implements ICreateUser {
     @IsNotEmpty()
     password!: string;
 
-    //toegevoegd
     @IsArray()
     @IsNotEmpty()
     boekenlijst: IBookList[] = [];
@@ -87,7 +82,6 @@ export class UpsertUserDto implements IUpsertUser {
     @IsNotEmpty()
     password!: string;
 
-    //toegevoegd
     @IsArray()
     @IsNotEmpty()
     boekenlijst: IBookList[] = [];
@@ -126,7 +120,6 @@ export class UpdateUserDto implements IUpdateUser {
     @IsOptional()
     completed!: boolean;
 
-    //toegevoegd
     @IsArray()
     @IsNotEmpty()
     boekenlijst: IBookList[] = [];

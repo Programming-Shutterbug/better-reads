@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
-  selector: 'nx-emma-indiv-user-edit',
+  selector: 'nx-emma-indiv-user-new',
   templateUrl: 'user-new.component.html',
   styleUrls: ['./user-new.component.css'],
 })

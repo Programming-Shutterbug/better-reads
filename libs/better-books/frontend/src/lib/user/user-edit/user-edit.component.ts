@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { IUser } from '@nx-emma-indiv/shared/api';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({

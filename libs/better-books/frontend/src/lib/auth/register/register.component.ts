@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../user/user.service';
@@ -15,14 +14,8 @@ import { UserService } from '../../user/user.service';
 export class RegisterComponent implements OnInit, OnDestroy {
   
   registerForm: FormGroup = new FormGroup({
-    email: new FormControl(null, [
-      Validators.required,
-      this.validEmail.bind(this),
-    ]),
-    password: new FormControl(null, [
-      Validators.required,
-      this.validPassword.bind(this),
-    ]),
+    email: new FormControl(null, [Validators.required, this.validEmail.bind(this),]),
+    password: new FormControl(null, [Validators.required, this.validPassword.bind(this),]),
   });
 
   subs: Subscription | null = null;
@@ -42,14 +35,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       straatnaam: new FormControl(null, [Validators.required]),
       huisnummer:  new FormControl(null, [Validators.required]),
       stad:  new FormControl(null, [Validators.required]),
-      email: new FormControl(null, [
-        Validators.required,
-        this.validEmail.bind(this),
-      ]),
-      password: new FormControl(null, [
-        Validators.required,
-        this.validPassword.bind(this),
-      ]),
+      email: new FormControl(null, [Validators.required, this.validEmail.bind(this),]),
+      password: new FormControl(null, [Validators.required, this.validPassword.bind(this),]),
     });
   }
 

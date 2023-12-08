@@ -49,7 +49,6 @@ export class BookNewComponent implements OnInit {
         this.authService.currentUser$.subscribe({
             next: (user: IUser | null) => {
                 if (user) {
-                    // Set the userID based on the current user
                     this.userId = user._id;
     
                     const selectedWriter = this.writers.find(writer => writer._id === this.selectedWriterId);
@@ -59,7 +58,7 @@ export class BookNewComponent implements OnInit {
                         return;
                     }
     
-                    // Create the new book with the updated userID
+                    // Creer nieuwe boek with geupdate userID
                     const newBook: IBook = {
                         ...this.book,
                         schrijver: selectedWriter,

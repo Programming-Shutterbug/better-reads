@@ -44,7 +44,7 @@ export class BookEditComponent implements OnInit {
             });
         });
 
-        // Retrieve user ID from AuthService
+
         this.authService.currentUser$.subscribe({
           next: (user: IUser | null) => {
             if (user) {
@@ -56,7 +56,7 @@ export class BookEditComponent implements OnInit {
           },
         });
     }
-
+    
     updateBook() {
       if (this.userId !== this.book?.creatorID) {
         console.error('Current user is not the creator of the book. Updating is not allowed.');
@@ -77,7 +77,6 @@ export class BookEditComponent implements OnInit {
     goBack(): void {
       this.router.navigate(['../../books', this.book._id]);
     }
-
 
     customSearch(term: string, item: any) {
       term = term.toLowerCase();

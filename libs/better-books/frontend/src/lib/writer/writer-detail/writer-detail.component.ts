@@ -26,7 +26,7 @@ export class WriterDetailComponent implements OnInit {
       ) {}
 
     ngOnInit(): void {
-      // Retrieve bookId from route parameter
+      // Haal boekId van route parameter
       this.route.paramMap.subscribe((params) => {
         this.writerId = params.get('_id');
 
@@ -36,12 +36,11 @@ export class WriterDetailComponent implements OnInit {
               if (user) {
                 this.userId = user._id;      
 
-      
-                // Fetch writer details using this.writerId
+                // Haal schrijverdetails op met gebruik van writerId
                 this.writerService.read(this.writerId).subscribe((observable) => {
                   this.writer = observable;
 
-                    // Set a flag to determine whether the button should be visible
+                // Als userId van ingelogde account en creatorId niet overheen komen, knoppen niet zichtbaar
                 this.showButton = this.isCurrentUserCreator();
                 });
               }
@@ -54,7 +53,6 @@ export class WriterDetailComponent implements OnInit {
       }  
 
       isCurrentUserCreator(): boolean {
-        // Check if userId is the same as the creatorID
         return this.userId === this.writer?.creatorID;
       }
 
@@ -69,9 +67,9 @@ export class WriterDetailComponent implements OnInit {
           next: () => {
             console.log('Writer deleted successfully');
 
-            // Close the confirmation dialog
+            // Sluit de dialog
             this.showDeleteConfirmation = false;
-            // Navigate back to the writer list
+
             this.router.navigate(['../../writers'], { relativeTo: this.route });
           },
           error: (error) => {
@@ -84,7 +82,6 @@ export class WriterDetailComponent implements OnInit {
     }
 
     goBack() {
-      // Navigate back to the previous route
       window.history.back();
     }
 }

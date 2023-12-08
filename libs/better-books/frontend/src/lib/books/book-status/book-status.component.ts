@@ -27,7 +27,7 @@ export class BookStatusComponent implements OnInit {
       ) {}
 
       ngOnInit(): void {
-        // Retrieve bookId from route parameter
+        // Haal bookId op van route parameter
         this.route.paramMap.subscribe((params) => {
           const bookIdParam = params.get('_id');
           if (bookIdParam) {
@@ -51,7 +51,7 @@ export class BookStatusComponent implements OnInit {
       
 
       handleStatusChange(leesstatus: string): void {
-        // Check if the book exists in the boekenlijst
+        // Check of het boek bestaat in het boekenlijst
         this.userService.findOneWithBooklist(this.userId!).subscribe({
           next: (userWithBooklist: IUser) => {
             this.user = userWithBooklist;
@@ -63,28 +63,24 @@ export class BookStatusComponent implements OnInit {
             console.log('bookExists:', bookExists);
       
             if (!bookExists) {
-              // Book doesn't exist, add it to the boekenlijst
+              // Boek bestaat niet, voeg het toe aan de boekenlijst
               this.bookService.addBookBooklist(this.userId!, this.bookId!, leesstatus as Leesstatus).subscribe(
                 (result) => {
-                  // Handle success
                   console.log(`Book added to boekenlijst with status: ${leesstatus}`);
                   this.router.navigate([`${this.userId}/dashboard`]);
                 },
                 (error) => {
-                  // Handle error
                   console.error('Error adding book to boekenlijst', error);
                 }
               );
             } else {
-              // Book exists, update its leesstatus
+              // Boek bestaat, update de leesstatus
               this.bookService.updateLeesstatus(this.userId!, this.bookId!, leesstatus as Leesstatus).subscribe(
                 (result) => {
-                  // Handle success
                   console.log(`Book status updated: ${leesstatus}`);
                   this.router.navigate([`${this.userId}/dashboard`]);
                 },
                 (error) => {
-                  // Handle error
                   console.error('Error updating book status', error);
                 },
               );
@@ -99,12 +95,10 @@ export class BookStatusComponent implements OnInit {
       removeBookFromList(): void {
         this.bookService.removeBookFromBoekenlijst(this.userId!, this.bookId!).subscribe({
           next: (result) => {
-            // Handle success
             console.log('Book removed from the list');
             this.router.navigate([`${this.userId}/dashboard`]);
           },
           error: (error) => {
-            // Handle error
             console.error('Error removing book from the list', error);
           },
         });

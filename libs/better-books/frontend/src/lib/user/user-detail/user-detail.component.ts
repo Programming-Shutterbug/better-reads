@@ -35,12 +35,11 @@ export class UserDetailComponent implements OnInit {
                  if (user) {
                   this.userId = user._id;      
 
-                
-                    // Fetch book details using this.bookId
+                    // Haal user details op gebaseerd up userId
                     this.userService.read(this.userId).subscribe((observable) => {
                     this.user = observable;
           
-                    // Set a flag to determine whether the button should be visible
+                    // Als UserId van account en van aangemaakte user niet hetzelfde zijn, is knop niet zichtbaar
                     this.showButton = this.isCurrentUserCreator();
                   });
                 }
@@ -53,7 +52,6 @@ export class UserDetailComponent implements OnInit {
     }  
 
     isCurrentUserCreator(): boolean {
-      // Check if userId is the same as the creatorID
       return this.userId === this.user?._id;
     }
   
@@ -69,11 +67,11 @@ export class UserDetailComponent implements OnInit {
           next: () => {
             console.log('Book deleted successfully');
 
-            // Close the confirmation dialog
+            // Sluit de dialoogscherm
             this.showDeleteConfirmation = false;
             
             this.authService.logout();
-            // Navigate back to the dashboard
+
             this.router.navigate(['/'])
             
           },

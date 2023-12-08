@@ -11,10 +11,6 @@ import {
     IUpsertWriter
 } from '@nx-emma-indiv/shared/api';
 
-/**
- * Use the `Pick` utility type to extract only the properties we want for
- * new to-do items
- */
 export class CreateWriterDto implements ICreateWriter {
 
     @IsOptional()

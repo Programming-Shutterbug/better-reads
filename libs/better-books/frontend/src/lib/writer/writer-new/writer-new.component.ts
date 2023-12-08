@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WriterService } from '../writer.service';
 import { IUser, IWriter } from '@nx-emma-indiv/shared/api';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -41,7 +41,7 @@ export class WriterNewComponent implements OnInit {
         return;
       }
     
-      // Set the creatorID (userID) in the writer object
+      // Zet de creatorID (userID) in het schrijver object
       this.writer.creatorID = this.userId;
     
       this.writerService.create(this.writer).subscribe({

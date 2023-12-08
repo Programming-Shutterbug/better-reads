@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
 export class BookListComponent implements OnInit, OnDestroy {
     books: IBook[] | null = null;
     subscription: Subscription | undefined = undefined;
-
     searchTerm = '';
 
     constructor(private bookService: BookService) {}
@@ -30,13 +29,13 @@ export class BookListComponent implements OnInit, OnDestroy {
 
     searchBooks(): IBook[] {
         const term = this.searchTerm.toLowerCase().trim();
-      
-        // If the search term is empty or books is null, return an empty array
+
+        // als de zoekterm leeg is of er geen boeken zijn, geef lege array terug
         if (!term || !this.books) {
           return [];
         }
       
-        // Filter books based on the search term
+        // Filter boeken gebaseerd op zoekterm
         return this.books.filter(book =>
           book.titel.toLowerCase().includes(term)
         );
@@ -45,7 +44,7 @@ export class BookListComponent implements OnInit, OnDestroy {
     matchesSearch(book: IBook): boolean {
         const term = this.searchTerm.toLowerCase().trim();
       
-        // Check if the book's title includes the search term
+        // Check if book titel is inclusief zoekterm
         return book.titel.toLowerCase().includes(term);
       }
 

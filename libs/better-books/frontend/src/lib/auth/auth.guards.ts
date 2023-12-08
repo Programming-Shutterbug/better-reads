@@ -23,8 +23,12 @@ export class LoggedInAuthGuard implements CanActivate, CanActivateChild {
 
     canActivate(): Observable<boolean> {
       console.log('canActivate LoggedIn');
+
+      // Gebruik de currentUser$ observable van de authService om te bepalen of de gebruiker is ingelogd.
       return this.authService.currentUser$.pipe(
+
         map((user: IUser | null) => {
+          // Controleer of er een gebruiker is en of de gebruiker een token heeft.
           if (user && user.token) {
             return true;
           } else {
@@ -36,8 +40,10 @@ export class LoggedInAuthGuard implements CanActivate, CanActivateChild {
       );
     }
 
-      canActivateChild(): Observable<boolean> | Promise<boolean> | boolean {
-        console.log('canActivateChild LoggedIn');
-        return this.canActivate();
-      }
+      
+    canActivateChild(): Observable<boolean> | Promise<boolean> | boolean {
+    console.log('canActivateChild LoggedIn');
+    
+    return this.canActivate();
+    }
   }

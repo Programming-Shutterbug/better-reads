@@ -6,11 +6,18 @@
         <p class="">
             Deze webapplicatie is gemaakt in het kader van het vak Client-side web programming individual
         </p>
+        <p class="mt-5">
+            
+            Betterreads is een website voor lezers om hun boeken bij te houden.
+        
+      </p>
         <p>
-            Voor deze casus heb ik gekozen voor 'Betterreads'. In deze applicatie kan de gebruiker bijhouden welke boeken ze gelezen hebben,
-            welke ze nog willen lezen etc. De gebruikers kunnen nieuwe boeken ook zelf toevoegen, wijzigen of verwijderen. De boeken die ze gelezen hebben kunnen ze
-            beoordelen. Daarnaast wordt er een aanbeveling als ze een bepaald boek hebben gelezen van andere boeken die de gebruikers ook hebben gelezen. Ze
-            kunnen ook schrijvers aanmaken, wijzigen of verwijderen.
+
+            Bij Betterreads kunnen gebruikers een account voor hunzelf aanmaken en inloggen. Na het inloggen kunnen ze door verschillende lijsten gaan. Zo is er een auteurslijst
+            waar alle auteurs in staan en waar verdere details bekeken kunnen worden door een detailpagina. Daarnaast is er ook een boekenlijst, ook hier kunnen de details worden 
+            bekeken. Bij de boekdetails kunnen gebruikers het boek toevoegen aan hun leeslijst via een status: 'gelezen', 'nog te lezen' en 'DNF'. Dit boek kunnen ze ook weer uit hun
+            leeslijst verwijderen. Een gebruiker kan ook zijn of haar eigen toegevoegde auteurs of boeken bewerken en verwijderen, niet die van andere gebruikers. Daarnaast kunnen
+            ze hun eigen accountgegevens ook bijwerken, of hun account verwijderen.        
         </p>
     
     </div>
@@ -33,83 +40,156 @@
             </thead>
             <tbody>
                <tr>
-                <th scope="row">1</th>
-                <td>Inloggen</td>
-                <td>De gebruiker moet inloggen/registeren om de inhoud van de website te bekijken.</td>
+                <th scope="row">F-01</th>
+                <td>Als gebruiker wil ik me kunnen registreren</td>
+                <td>
+                  - Er is een Form voor de gebruiker om in te vullen.<br>
+                  - De gebruiker ziet foutmeldingen als een veld opengelaten is dat ingevuld moet zijn.<br>
+                  - Er wordt een foutmelding gegeven als een input van een veld niet aan specifieke waarde voldoet.<br>
+                  - Er is een knop om te registreren te bevestigen.
+                </td>
                 <td>Must</td>
               </tr>
               <tr class="table-info">
-                <th scope="row">2</th>
-                <td>Registreren</td>
-                <td>De gebruiker moet kunnen registreren om een account aan te maken zodat de inhoud van de website te zien is.</td>
+                <th scope="row">F-02</th>
+                <td>Als gebruiker wil ik in kunnen loggen</td>
+                <td>
+                  - Er wordt inputvelden voor email en wachtwoord aan de gebruiker weergeven om in te vullen.<br>
+                  - De gebruiker ziet een foutmelding als de combinatie van email en wachtwoord incorrect is.<br>
+                  - Er is een knop om in te loggen.
+                </td>
                 <td>Must</td>
               </tr>
               <tr>
-                <th scope="row">3</th>
-                <td>Lijst van eigen boeken weergeven</td>
-                <td>De gebruiker begint met een lijst van zijn eigen gelezen, nog te lezen, DNF boeken.</td>
+                <th scope="row">F-03</th>
+                <td>Als gebruiker wil ik een lijst aan basis informatie zien van boeken</td>
+                <td>
+                  - Er wordt een lijst van boeken weergeven.<br>
+                  - Er wordt een boekcover foto weergeven.<br>
+                  - Er wordt een boektitel weergeven.<br>
+                  - Er wordt welke auteur het boek heeft geschreven.<br>
+                  - Er wordt weergeven in welke taal het boek is.<br>
+                  - Er wordt weergeven op welke datum het boek gepubliceerd is.<br>
+                  - Er is een 'niew boek' knop om te navigeren om nieuw boek aan te maken.
+                </td>
                 <td>Must</td>
               </tr>
               <tr class="table-info">
-                <th scope="row">4</th>
-                <td>Lijst van boeken weergeven</td>
-                <td>De gebruiker kan naar 'Boeken' navigeren waar alle boeken staan, waar de gebruiker in kan zoeken en filteren.</td>
+                <th scope="row">F-04</th>
+                <td>Als gebruiker kan ik via de boekenlijst naar de specifieke boekendetails</td>
+                <td>
+                  - Vie de boektitel in de boekenlijst kan de gebruiker naar de detailpagina navigeren.<br>
+                  - Boekdetails laat alle informatie van de lijst ook weergeven.<br>
+                  - Er wordt een samenvatting, genre, pagina nummer's weergeven.<br>
+                  - Er wordt meer informatie van de auteur weergeven.<br>
+                  - Via de auteurnaam kan de gebruiker naar de auteurdetail navigeren.<br>
+                  - Er is een boekstatus knop om te navigeren naar waar de gebruiker het boek kan toevoegen aan hun boekenlijst.<br>
+                  - Als de gebruiker het boek zelf heeft aangemaakt is er een verwijderknop aanwezig.<br>
+                  - Via de verwijderknop opent een bevestiging waardoor de gebruiker het boek kan verwijderen.<br>
+                  - Als de gebruiker het boek zelf heeft aangemaakt is er een wijzig boek knop aanwezig.<br>
+                </td>
                 <td>Must</td>
               </tr>
               <tr>
-                <th scope="row">5</th>
-                <td>Nieuw boek toevoegen</td>
-                <td>De gebruiker kan bij 'Boeken' een nieuw boek toevoegen.</td>
+                <th scope="row">F-05</th>
+                <td>Als gebruiker kan ik via boekdetails naar forms om boekdetails te wijzigen</td>
+                <td>
+                  - Er is een Form voor de gebruiker om in te vullen met huidige details van het boek.<br>
+                  - De gebruiker ziet foutmeldingen als een veld opengelaten is dat ingevuld moet zijn.<br>
+                  - Er wordt een foutmelding gegeven als een input van een veld niet aan specifieke waarde voldoet.<br>
+                  - Er is een knop om de wijziging te bevestigen.
+                </td>
                 <td>Must</td>
               </tr>
               <tr class="table-info">
-                <th scope="row">6</th>
-                <td>Detailpagina boek inzien</td>
-                <td>Via de lijst van boeken kan de gebruiker op een boek klikken en naar de detailpagina van een boek gaan voor meer informatie.</td>
+                <th scope="row">F-06</th>
+                <td>Als gebruiker kan ik een nieuw boek toevoegen</td>
+                <td>
+                  - Er is een Form voor de gebruiker om in te vullen.<br>
+                  - Via een drop-down, waar typend in gezocht kan worden, kan er een bestaande auteur worden geselecteerd.<br>
+                  - De gebruiker ziet foutmeldingen als een veld opengelaten is dat ingevuld moet zijn.<br>
+                  - Er wordt een foutmelding gegeven als een input van een veld niet aan specifieke waarde voldoet.<br>
+                  - Er is een knop om een nieuw boek aan te maken.
+                </td>
                 <td>Must</td>
               </tr>
               <tr>
-                <th scope="row">7</th>
-                <td>Tags geven</td>
-                <td>De gebruiker kan via de detailpagina van een boek een tag geven: gelezen, nog te lezen, DNF.</td>
+                <th scope="row">F-07</th>
+                <td>Als gebruiker kan ik een boek een leesstatus geven en toevoegen aan mijn boekenlijst</td>
+                <td>
+                  - De gebruiker kan via de gelezen, nog te lezen of DNF knop het boek, met die status toevoegen, aan hun boekenlijst.<br>
+                  - De gebruiker kan het boek uit de boekenlijst verwijderen.
+                </td>
                 <td>Must</td>
               </tr>
               <tr class="table-info">
-                <th scope="row">8</th>
-                <td>Beoordelen</td>
-                <td>Als de gebruiker de tag 'gelezen' heeft gebruikt, krijgt de gebruiker een pagina/pop-up om het boek te beoordelen.</td>
+                <th scope="row">F-08</th>
+                <td>Als gebruiker wil ik een lijst aan basis informatie zien van auteurs</td>
+                <td>
+                  - Er wordt een lijst van auteurs weergeven.<br>
+                  - Er wordt een foto van de auteur weergeven.<br>
+                  - Er wordt de naam van de auteur weergeven.<br>
+                  - Er wordt weergeven wat de geboortedatum van de auteur is.<br>
+                  - Er is een 'niew schrijver' knop om te navigeren om nieuw auteur aan te maken.
+                </td>
                 <td>Must</td>
               </tr>
               <tr>
-                <th scope="row">9</th>
-                <td>Beoordelen lijst</td>
-                <td>De gebruiker kan naar 'Beoordelingen' navigeren waar alle beoordelingen staan.</td>
-                <td>Could</td>
+                <th scope="row">F-09</th>
+                <td>Als gebruiker kan ik via de auteurlijst naar de specifieke auteurlijst</td>
+                <td>
+                  - Vie de auteurnaam in de auteurlijst kan de gebruiker naar de detailpagina navigeren.<br>
+                  - Auteurdetails laat alle informatie van de lijst ook weergeven.<br>
+                  - Er wordt geboorteplaats, biografie en moedertaal van de auteur weergeven.<br>
+                  - Als de gebruiker de auteur zelf heeft aangemaakt is er een verwijderknop aanwezig.<br>
+                  - Via de verwijderknop opent een bevestiging waardoor de gebruiker de auteur kan verwijderen.<br>
+                  - Als de gebruiker de auteur zelf heeft aangemaakt is er een wijzig de auteur knop aanwezig.<br>
+                </td>
+                <td>Must</td>
               </tr>
               <tr class="table-info">
-                <th scope="row">10</th>
-                <td>Lijst van schrijver</td>
-                <td>Er is een lijst met 'Schrijvers' waar alle schrijvers in staan, waar de gebruiker in kan zoeken en filteren.</td>
+                <th scope="row">F-10</th>
+                <td>Als gebruiker kan ik mijn eigen boekenlijst zien</td>
+                <td>
+                  - Er is een lijst van alle boeken van de gebruiker die op gelezen, nog te lezen of DNF staan.<br>
+                  - Er wordt aangegeven hoeveel boeken in totaal er in de lijst staan.<br>
+                  - De gebruiker kan filteren gebaseerd op de leesstatus.<br>
+                  - De gebruiker kan na het filteren ook weer alle boeken in hun boekenlijst weergeven.<br>
+                </td>
                 <td>Must</td>
               </tr>
               <tr>
-                <th scope="row">11</th>
-                <td>Detailpagina schrijver</td>
-                <td>Detailpagina opent als er op een schrijver in de lijst wordt geklikt door de gebruiker.</td>
+                <th scope="row">F-11</th>
+                <td>Als gebruiker kan ik mijn eigen account inzien</td>
+                <td>
+                  - Als gebruiker kan ik via de header mijn eigen informatie inzien.<br>
+                  - Als gebruiker kan ik mijn eigen gegevens wijzigen via wijzig gegevens.<br>
+                  - Als gebruiker kan ik mijn eigen account verwijderen.<br>
+                </td>
                 <td>Should</td>
               </tr>
               <tr class="table-info">
-                <th scope="row">12</th>
-                <td>Schrijver volgen</td>
-                <td>Gebruikers kunnen andere beoordelingen zien.</td>
-                <td>Could</td>
-              </tr>
-              <tr class="table-info">
-                <th scope="row">14</th>
-                <td>Gebruiker wijzigen gegevens</td>
-                <td>Gebruiker kan in hun account hun eigen gegevens wijzigen.</td>
+                <th scope="row">F-12</th>
+                <td>Als gebruiker kan ik uitloggen</td>
+                <td>- Als gebruiker kan ik via de header uitloggen van mijn account.</td>
                 <td>Should</td>
               </tr>
+              <tr>
+                <th scope="row">F-13</th>
+                <td>Als gebruiker begin ik bij een homepagina</td>
+                <td>
+                  - Een gebruiker begint met een homepagina als de website wordt geopend.<br>
+                  - Op de homepagina is een knop voor de gebruiker om te registreren.<br>
+                  - Op de homepagina is een knop voor de gebruiker om in te loggen.<br>
+                </td>
+                <td>Should</td>
+                <tr class="table-info">
+                  <th scope="row">F-14</th>
+                  <td>Als gebruiker kan ik aanbevelingen zien van andere boeken als het boek aan mijn boekenlijst is toegevoegd. </td>
+                  <td>- Als gebruiker zie ik via boekdetails aanbeveling gebaseerd op andere gebruikers boekenlijsten.</td>
+                  <td>Could</td>
+                </tr>
+
             </tbody>
         </table>
     </div>
@@ -171,24 +251,23 @@
         <div class="row">
           <div class="col-md-6">
             <h2>Datamodel / ERD</h2>
-            <p class="mb-3">Te zien is mijn ERD van mijn casus Betterreads. De verplichte entiteit, user/gebruiker, is aanwezig. Ook zijn er drie andere entiteiten aanwezig: 
-              Boeken, Beoordeling, Schrijver. Een gebruiker kan een boek inzien, aanmaken, beoordeling van een boek geven en een schrijver volgen.
+            <p class="mb-3">Te zien is mijn ERD van mijn casus Betterreads. De verplichte entiteit, user/gebruiker, is aanwezig. 
+              Ook zijn de andere entiteiten aanwezig: Boeken, Schrijver en (tussentabel) Boekenlijst. Een gebruiker kan een lijst van boeken zien, boekdetails van een specifiek boek, 
+              een boek aanmaken en alleen hun eigen aangemaakte boek wijzigen of verwijderen.
             </p>
       
             <p>
-              Gebruikers kunnen schrijvers volgen, als ze een schrijver volgen zien ze ook een aanbeveling voor een andere schrijver. Deze aanbeveling
-              wordt gemaakt gebaseerd op de gebruikers. Er wordt gekeken van alle gebruikers die de schrijver volgen, wie ze nog meer volgen.
+              Gebruikers kunnen een lijst van schrijvers zien, details van een schrijver en een schrijver aanmaken. 
+              Alleen de eigen aangemaakte schrijver kan een gebruiker wijzigen of verwijderen.
             </p>
       
             <p>
-              Een boek kan aangemaakt worden door één gebruiker, er wordt gecheckt dat een boek niet dubbel ingezet wordt. Daarnaast kan een boek beoordeeld worden.
-              Boeken kunnen beoordeeld zijn door meerdere gebruikers maar een beoordeling zit vast aan één boek en één user.
+              Een gebruiker kan een leesstatus geven aan een boek en dan wordt dat boek in hun boekenlijst neergezet. Deze boekenlijst kunnen ze zien en ook filteren in deze lijst gebaseerd op leesstatus. 
+              Deze leesstatus kunnen ze ook verwijderen en dan wordt het hele boek verwijderd uit hun boekenlijst.
             </p>
           </div>
-      
+
           <div class="col-md-6 d-flex justify-content-center align-items-center">
-            <!-- <img [src]="imagePath" class="mx-auto" style="max-width: 100%; height: auto;" /> -->
-            <!-- <img src="/assets/Boekencasus.png"/> -->
             <img *ngIf="imagePath" [src]="imagePath" alt="Boekencasus" style="max-width: 100%; height: auto;">
           </div>
         </div>

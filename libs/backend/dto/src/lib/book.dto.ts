@@ -13,10 +13,6 @@ import {
     IWriter
 } from '@nx-emma-indiv/shared/api';
 
-/**
- * Use the `Pick` utility type to extract only the properties we want for
- * new to-do items
- */
 export class CreateBookDto implements ICreateBook {
 
     @IsOptional()
