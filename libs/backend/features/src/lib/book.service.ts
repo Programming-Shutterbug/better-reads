@@ -4,9 +4,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Book as BookModel, BookDocument } from './book/book.schema';
 import { User as UserModel, UserDocument } from './user/user.schema';
 import { IBook, IUser, Leesstatus } from '@nx-emma-indiv/shared/api';
-// import { Meal, MealDocument } from '@avans-nx-workshop/backend/features';
 import { CreateBookDto, UpdateBookDto } from '@nx-emma-indiv/backend/dto';
 import { WriterService } from './writer.service';
+import { Neo4Service } from './neo.service';
 
 @Injectable()
 export class BookService {
@@ -15,7 +15,8 @@ export class BookService {
         constructor(
             @InjectModel(BookModel.name) private bookModel: Model<BookDocument>,
             @InjectModel(UserModel.name) private userModel: Model<UserDocument>,
-            private readonly writerService: WriterService
+            private readonly writerService: WriterService,
+            private readonly neo4jService: Neo4Service
         ) {}
 
         async findAll(): Promise<IBook[]> {
@@ -59,8 +60,12 @@ export class BookService {
             ...bookWithoutWriter,
             schrijver: schrijver,
             };
-        
             const createdBook = await this.bookModel.create(bookData);
+
+            this.logger.log(createdBook.schrijver._id);
+
+            this.neo4jService.addOrUpdateBook(createdBook, createdBook.schrijver._id);
+
             return createdBook;
         }
         
@@ -80,6 +85,9 @@ export class BookService {
         
             // Sla geupdate boek op
             const updatedBook = await existingBook.save();
+
+            
+            this.neo4jService.addOrUpdateBook(updatedBook, updatedBook.schrijver._id);
         
             return updatedBook;
         }
@@ -88,44 +96,53 @@ export class BookService {
         async deleteBook(_id: string): Promise<void> {
         this.logger.log(`Deleting Book with id ${_id}`);
 
-        const deletedItem = await this.bookModel.findByIdAndDelete(_id).exec();
+        const book = await this.findOne(_id);
 
-        if (!deletedItem) {
+        if(book) {
+            await this.bookModel.deleteOne(book).exec();
+        }
+        else {
             this.logger.debug('Book not found for deletion');
             throw new NotFoundException(`Book with _id ${_id} not found`);
         }
+
+        this.neo4jService.deleteBook(book);
+
 
         this.logger.log(`Book deleted successfully`);
         }
 
         async addBookBooklist(userId: string, bookId: IBook, leesstatus: Leesstatus): Promise<IUser> {
-
             const user = await this.userModel.findById(userId).exec();
-
+        
             if (!user) {
                 throw new NotFoundException(`User with id ${userId} not found`);
             }
-
-            // Creëer een nieuw boekobject met het opgegeven boekId en leesstatus.
+        
+            // Create a new book object with the provided bookId and leesstatus.
             const newBook = { boekId: bookId, leesstatus: leesstatus };
-
-            // Voeg het nieuwe boek toe aan de boekenlijst van de gebruiker.
+        
+            // Add the new book to the user's booklist.
             user.boekenlijst.push(newBook);
-
-            // Sla de bijgewerkte gebruiker op in de database.
+        
+            // Save the updated user to the database.
             const updatedUser = await user.save();
-
+        
+            // Add the updated booklist to Neo4j.
+            await this.neo4jService.addBookList(userId, bookId, leesstatus);
+        
             return updatedUser;
         }
+        
 
-        async updateLeesstatus(userId: string, bookId: string, leesstatus: Leesstatus): Promise<IUser> {
+        async updateLeesstatus(userId: string, bookId: IBook, leesstatus: Leesstatus): Promise<IUser> {
             const user = await this.userModel.findById(userId).exec();
 
             if (!user) {
                 throw new NotFoundException(`User with id ${userId} not found`);
             }
             // Find the book entry in boekenlijst with the given bookId
-            const bookIndex = user.boekenlijst.findIndex(book => String(book.boekId) === bookId);
+            const bookIndex = user.boekenlijst.findIndex(book => String(book.boekId) === bookId.toString());
 
             if (bookIndex === -1) {
                 console.log(`Book with id ${bookId} not found in user's boekenlijst`);
@@ -137,17 +154,19 @@ export class BookService {
 
             const updatedUser = await user.save();
 
+            this.neo4jService.updateBookList(userId, bookId, leesstatus);
+
             return updatedUser;
         }
 
 
-        async removeBookBookList(userId: string, bookId: string): Promise<IUser> {
+        async removeBookBookList(userId: string, bookId: IBook): Promise<IUser> {
             const user = await this.userModel.findById(userId).exec();
         
             if (!user) {
                 throw new NotFoundException(`User with id ${userId} not found`);
             }
-            const bookIndex = user.boekenlijst.findIndex(book => String(book.boekId) === bookId);
+            const bookIndex = user.boekenlijst.findIndex(book => String(book.boekId) === bookId.toString());
             if (bookIndex === -1) {
                 throw new NotFoundException(`Book with id ${bookId} not found in user's boekenlijst`);
             }
@@ -156,9 +175,11 @@ export class BookService {
             user.boekenlijst.splice(bookIndex, 1);
         
             const updatedUser = await user.save();
-        
+
+            this.neo4jService.removeBookBookList(userId, bookId);
+
             return updatedUser;
         }
-        
+
 
 }

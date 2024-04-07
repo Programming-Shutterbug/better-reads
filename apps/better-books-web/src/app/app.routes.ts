@@ -85,13 +85,13 @@ export const appRoutes: Route[] = [
         pathMatch: "full", 
         component: BookDetailComponent },
     { 
-        path: "books/:_id/:userId/booklist", 
-        pathMatch: "full", 
-        component: BookStatusComponent },
-    { 
         path: "books/:_id/editbook", 
         pathMatch: "full", 
         component: BookEditComponent },
+    { 
+        path: "books/:_id/:userId/booklist", 
+        pathMatch: "full", 
+        component: BookStatusComponent },
  
 
     { path: '**', redirectTo: 'homepage' }

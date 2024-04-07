@@ -8,6 +8,10 @@ import { Writer, WriterSchema } from '../writer/writer.schema';
 import { WriterService } from '../writer.service';
 import { User, UserSchema } from '../user/user.schema';
 
+import { ConfigModule } from '@nestjs/config';
+import { NeoModule } from '../neo/neo.module';
+import { Neo4Service } from '../neo.service';
+
 
 @Module({
   imports: [
@@ -16,9 +20,11 @@ import { User, UserSchema } from '../user/user.schema';
       { name: Writer.name, schema: WriterSchema },
       { name: User.name, schema: UserSchema },
     ]),
+    ConfigModule,
+    NeoModule
   ],
   controllers: [BookController],
-  providers: [BookService, WriterService],
+  providers: [BookService, WriterService, Neo4Service],
   exports: [BookService],
 })
 export class BackendFeaturesBookModule {}

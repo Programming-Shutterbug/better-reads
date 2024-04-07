@@ -4,13 +4,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Writer as WriterModel, WriterDocument } from './writer/writer.schema';
 import { IWriter } from '@nx-emma-indiv/shared/api';
 import { CreateWriterDto, UpdateWriterDto } from '@nx-emma-indiv/backend/dto';
+import { Neo4Service } from './neo.service';
 
 @Injectable()
 export class WriterService {
     private readonly logger: Logger = new Logger(WriterService.name);
 
     constructor(
-        @InjectModel(WriterModel.name) private writerModel: Model<WriterDocument>
+        @InjectModel(WriterModel.name) private writerModel: Model<WriterDocument>,
+        private readonly neo4jService: Neo4Service
     ) {}
 
     async findAll(): Promise<IWriter[]> {
@@ -58,6 +60,9 @@ export class WriterService {
         
         const createdItem = await this.writerModel.create(writerWithoutId);
         
+        
+        this.neo4jService.addOrUpdateWriter(createdItem);
+
         return createdItem;
     }
     
@@ -76,6 +81,8 @@ export class WriterService {
       
         // Save de geupdate schrijver
         const updatedWriter = await existingWriter.save();
+
+        this.neo4jService.addOrUpdateWriter(updatedWriter);
       
         return updatedWriter;
     }
@@ -84,13 +91,15 @@ export class WriterService {
     async deleteWriter(_id: string): Promise<void> {
       this.logger.log(`Deleting writer with id ${_id}`);
 
-      const deletedItem = await this.writerModel.findByIdAndDelete(_id).exec();
+      const deletedWriter = await this.writerModel.findByIdAndDelete(_id).exec();
 
-      if (!deletedItem) {
+      if (!deletedWriter) {
           this.logger.debug('Writer not found for deletion');
           throw new NotFoundException(`Writer with _id ${_id} not found`);
       }
 
+      this.neo4jService.deleteWriter(deletedWriter._id);
+
       this.logger.log(`Writer deleted successfully`);
-  }
+    }
 }

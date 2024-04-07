@@ -5,13 +5,15 @@ import { User as UserModel, UserDocument } from './user/user.schema';
 import { IUser } from '@nx-emma-indiv/shared/api';
 import { CreateUserDto, UpdateUserDto } from '@nx-emma-indiv/backend/dto';
 import * as bcrypt from 'bcrypt';
+import { Neo4Service } from './neo.service';
 
 @Injectable()
 export class UserService {
     private readonly logger: Logger = new Logger(UserService.name);
 
     constructor(
-        @InjectModel(UserModel.name) private userModel: Model<UserDocument>
+        @InjectModel(UserModel.name) private userModel: Model<UserDocument>,
+        private readonly neo4jService: Neo4Service
     ) {}
 
     async findAll(): Promise<IUser[]> {
@@ -56,12 +58,14 @@ export class UserService {
         // Hash het wachtwoord voordat het wordt opgeslagen
         const hashedPassword = await bcrypt.hash(userDto.password, 10);
       
-        const createdItem = await this.userModel.create({
+        const createdUser = await this.userModel.create({
           ...userWithoutId,
           password: hashedPassword, // Voeg het gehashte wachtwoord toe
         });
+
+        this.neo4jService.addOrUpdateUser(createdUser);
       
-        return createdItem;
+        return createdUser;
     }
       
         
@@ -79,6 +83,8 @@ export class UserService {
       
         // Sla geupdate user op
         const updatedUser = await existingUser.save();
+
+        this.neo4jService.addOrUpdateUser(updatedUser);
       
         return updatedUser;
     }
@@ -86,12 +92,14 @@ export class UserService {
     async deleteUser(_id: string): Promise<void> {
       this.logger.log(`Deleting user with id ${_id}`);
 
-      const deletedItem = await this.userModel.findByIdAndDelete(_id).exec();
+      const deletedUser = await this.userModel.findByIdAndDelete(_id).exec();
 
-      if (!deletedItem) {
+      if (!deletedUser) {
           this.logger.debug('User not found for deletion');
           throw new NotFoundException(`User with _id ${_id} not found`);
       }
+
+      this.neo4jService.deleteUser(deletedUser._id);
 
       this.logger.log(`User deleted successfully`);
     } 

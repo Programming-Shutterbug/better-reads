@@ -141,7 +141,8 @@ export class BookService {
                 catchError(this.handleError)
             );
     }
-      public removeBookFromBoekenlijst(userId: string, boekId: string): Observable<IUser> {
+      
+    public removeBookFromBoekenlijst(userId: string, boekId: string): Observable<IUser> {
         const endpoint = `${environment.dataApiUrl}/api/book/${boekId}/${userId}/booklist`;
     
         return this.http
@@ -152,6 +153,21 @@ export class BookService {
                 catchError(this.handleError)
             );
     }
+
+    public getRecommendations(boekId: string | null, options?: any): Observable<IBook[]> {
+        console.log(`Fetching recommendations for book ${boekId}`);
+
+        return this.http
+            .get<ApiResponse<IBook[]>>(`${environment.dataApiUrl}/api/book/${boekId}/recommendations`, {
+                ...options,
+                ...httpOptions,
+            })
+            .pipe(
+                map((response: any) => response.results as IBook[]),
+                tap(console.log),
+                catchError(this.handleError)
+            );
+      }
 
   
 

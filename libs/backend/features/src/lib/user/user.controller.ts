@@ -6,7 +6,9 @@ import { CreateUserDto, UpdateUserDto } from '@nx-emma-indiv/backend/dto';
 
 @Controller('user')
 export class UserController {
-    constructor(private userService: UserService) {}
+    constructor(
+        private userService: UserService
+    ) {}
 
     // Vind alle users
     @Get('')
